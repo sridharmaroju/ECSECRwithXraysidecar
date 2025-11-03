@@ -30,4 +30,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: sridharmaroju/ECSECRwithXraysidecar:v${{ github.run_number }}.0, sridharmaroju/ECSECRwithXraysidecar:latest
+          tags: sridharmaroju/ecsecrwithxraysidecar:v${{ github.run_number }}.0, sridharmaroju/ecsecrwithxraysidecar:latest
