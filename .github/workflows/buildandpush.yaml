@@ -1,0 +1,45 @@
+# name: Build and Push to AWS ECR
+# on:
+#   push:
+#     branches:
+#       - main
+
+# env:
+#   IMAGE_TAG: ${{ github.sha }}
+
+# jobs:
+#   build-and-push:
+#     if: "!contains(github.event.head_commit.message, '[skip cicd]')"
+#     name: Build, Tag, and Push
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v4
+
+#       - name: Configure AWS Credentials
+#         uses: aws-actions/configure-aws-credentials@v4
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: ${{ secrets.AWS_REGION }}
+
+#       - name: Login to Amazon ECR
+#         uses: aws-actions/amazon-ecr-login@v2
+
+#       - name: Build and Tag the Docker Image
+#         id: build-image
+#         env:
+#           FULL_IMAGE_NAME: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+#         run: |
+#           # The -t flag creates the local tag matching the full ECR path and unique tag
+#           docker build -t $FULL_IMAGE_NAME .
+#           echo "Image Tagged as: $FULL_IMAGE_NAME"
+
+#       - name: Push Docker Image to Amazon ECR
+#         env:
+#           FULL_IMAGE_NAME: ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+#         run: |
+#           # The push command uses the fully qualified name to send the image
+#           docker push $FULL_IMAGE_NAME
+#           echo "Image pushed successfully!"
